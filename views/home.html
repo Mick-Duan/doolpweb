@@ -1,0 +1,194 @@
+{{template "base/base.html" .}}
+{{define "meta"}}
+    <meta name="description" content="Doolp - Simple hosting for your Docker containers" />
+    <meta name="keywords" content="Docker, Cloud, Doolp">
+    <title>{{i18n .Lang "homepage"}} - doolp: {{i18n .Lang "app_intro"}}</title>
+{{end}}
+{{define "head"}}{{end}}
+{{define "body"}}
+<div class="main-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title">
+                    Doolp Cloud
+                </div>
+                <div class="desc">
+                    {{i18n .Lang "home.beego_desc"}}
+                </div>
+                <div class="actions">
+                    <a href="/docs/intro/" class="btn btn-lg btn-info">{{i18n .Lang "learn more"}}</a>
+                    <a href="/quickstart" class="btn btn-lg btn-success">{{i18n .Lang "get started"}}</a>
+                    <span style="position:absolute;margin:10px 0 0 40px;">{{i18n .Lang "version"}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row home-box">
+        <div class="col-md-8">
+            <h2>{{i18n .Lang "home.quick_start"}}</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="markdown">
+                        {{if eq .Lang "zh-CN"}}
+                            <p>下载安装</p>
+                            <pre lang="bash"><code>yum install doolp-dir</code></pre>
+                            <p>注册Doolp:</p>
+                            <pre lang="bash"><code>doolp-dir --register<br></code></pre>
+                            <p>创建本地云控制端:<code>MyCloud</code></p>
+                            <pre lang="bash"><code>doolp-dir install MyCloud<br></code></pre>
+                            <p>运行本地云控制端:</p>
+                            <pre><code>doolp-dir run MyCloud</code></pre>
+                        {{else}}
+                            <p>Install doolp console:</p>
+                            <pre lang="bash"><code>yum install doolp-dir</code></pre>
+                            <p>Register to Doolp:</p>
+                            <pre lang="bash"><code>doolp-dir --register<br></code></pre>
+                            <p>Create your own cloud console: <code>MyCloud</code></p>
+                            <pre lang="bash"><code>doolp-dir install MyCloud<br></code></pre>
+                            <p>Run the cloud console:</p>
+                            <pre><code>doolp-dir run MyCloud</code></pre>
+                        {{end}}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="markdown">
+                        {{if eq .Lang "zh-CN"}}
+                            <p>安装客户端</p>
+                            <pre lang="bash"><code>yum install doolp-client</code></pre>
+                            <p>注册Doolp:</p>
+                            <pre lang="bash"><code>doolp-client --register<br></code></pre>
+                            <p>创建本地云节点:<code>Node1</code></p>
+                            <pre lang="bash"><code>doolp-client install Node1<br></code></pre>
+                            <p>运行本地云节点:</p>
+                            <pre><code>doolp-client run Node1</code></pre>
+                        {{else}}
+                            <p>Install doolp client:</p>
+                            <pre lang="bash"><code>yum install doolp-client</code></pre>
+                            <p>Register to Doolp:</p>
+                            <pre lang="bash"><code>doolp-client --register<br></code></pre>
+                            <p>Create a new server node:<code>Node1</code></p>
+                            <pre lang="bash"><code>doolp-client install Node1<br></code></pre>
+                            <p>Run the new server node:</p>
+                            <pre><code>doolp-client run Node1</code></pre>
+                        {{end}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="home-box">
+                <h2>{{i18n .Lang "home.further_reading"}}</h2>
+                <div class="well markdown">
+                    <ul class="list-unstyled">
+                        {{if eq .Lang "zh-CN"}}
+                            <li><i class="icon-angle-right"></i> <a href="/docs/mvc/controller/Quick_Start.md">快速使用</a></li>
+                        {{else}}
+                            <li><i class="icon-angle-right"></i> <a href="/docs/mvc/controller/Quick_Start.md">Quick Start</a></li>
+                        {{end}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row home-box">
+        <div class="col-md-12">
+            <h2>{{i18n .Lang "home.features"}}</h2>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="feature">
+                        <h3 class="title">
+                            {{if eq .Lang "zh-CN"}}
+                                便利使用
+                            {{else}}
+                                EASY TO USE
+                            {{end}}
+                        </h3>
+                        <p class="content">
+                            {{if eq .Lang "zh-CN"}}
+                                便利安装，搭建专业的自己本地Docker私有云服务器，并通过使用Doolp图形界面方便地管理你自己的云服务器。
+                            {{else}}
+                                Easy for setup and build your own local private cloud, through Doolp to easily manage your own docker cloud。
+                            {{end}}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="feature">
+                        <h3 class="title">
+                            {{if eq .Lang "zh-CN"}}
+                                弹性扩展
+                            {{else}}
+                                FLEXIBILITY
+                            {{end}}
+                        </h3>
+                        <p class="content">
+                            {{if eq .Lang "zh-CN"}}
+                                之后需要添加..
+                            {{else}}
+                                Hmmmm..really good.. I will add it later..
+                            {{end}}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="feature">
+                        <h3 class="title">
+                            {{if eq .Lang "zh-CN"}}
+                                最低成本
+                            {{else}}
+                                SAVE MONEY
+                            {{end}}
+                        </h3>
+                        <p class="content">
+                            {{if eq .Lang "zh-CN"}}
+                                嗯...很省钱...是的...
+                            {{else}}
+                                Yes,, it must be saving money...
+                            {{end}}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="feature">
+                        <h3 class="title">
+                            {{if eq .Lang "zh-CN"}}
+                                高性能
+                            {{else}}
+                                HIGH PERFORMANCE
+                            {{end}}
+                        </h3>
+                        <p class="content">
+                            {{if eq .Lang "zh-CN"}}
+                                充分利用物理机资源
+                            {{else}}
+                                Very low system cost..we love high performance.. ;D
+                            {{end}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row home-box">
+        <div class="col-md-12">
+            <h2>{{i18n .Lang "home.platform"}}</h2>
+            <div class="whouse">
+                <img class="img-thumbnail" style="height:88px;width:280px;" src="/static/img/platform/centos.png">
+                <img class="img-thumbnail" style="height:88px;width:280px;" src="/static/img/platform/linux.png">
+                <img class="img-thumbnail" style="height:88px;width:280px;" src="/static/img/platform/redhat.png">
+                <img class="img-thumbnail" style="height:88px;width:280px;" src="/static/img/platform/ubuntu.png">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+<!-- {{template "tweets.html" .}} -->
+</div>
+{{end}}
