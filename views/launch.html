@@ -1,0 +1,806 @@
+{{template "base/console_base.html" .}}
+{{define "head"}}{{end}}
+{{define "meta"}}
+    <meta name="description" content="Doolp - Simple hosting for your Docker containers" />
+    <meta name="keywords" content="Docker, Cloud, Doolp">
+    <title>{{i18n .Lang "console"}} - doolp: {{i18n .Lang "console_intr"}}</title>
+{{end}}
+{{define "body"}} 
+<div class="main-container-inner">
+        <div class="main-content">
+          
+  <div id="breadcrumbs" class="breadcrumbs">
+    <ul class="breadcrumb">
+      <li>
+        <i class="icon-dashboard home-icon"></i>
+        <a href="/container/list/">
+          Dashboard
+        </a>
+      </li>
+      <li class="active">
+        <i class="icon-rocket"></i>
+        Launch new container
+      </li>
+    </ul>
+  </div>
+  <div class="page-content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="page-header has-tabs">
+          <div id="wizard-header" class="row-fluid" data-target="#step-container">
+            <ul class="wizard-steps">
+              <li class="active" data-target="#modal-step1">
+                <span class="step">1</span>
+                <span class="title">Image selection</span>
+              </li>
+              <li data-target="#modal-step2">
+                <span class="step">2</span>
+                <span class="title">Container configuration</span>
+              </li>
+              <li data-target="#modal-step3">
+                <span class="step">3</span>
+                <span class="title">Environment variables</span>
+              </li>
+            </ul>
+          </div>
+          <div class="row tab-row">
+            <ul class="nav nav-pills images-pills">
+                <li id="doolp-images-li" class="active">
+                  <a data-toggle="tab" href="#tab-image-doolp">
+                    <i class="icon-rocket bigger-110"></i>
+                    Jumpstarts
+                  </a>
+                </li>
+                <li id="docker-index-li">
+                  <a data-toggle="tab" href="#tab-image-community">
+                    <i class="icon-group bigger-110"></i>
+                    Public images
+                  </a>
+                </li>
+                <li id="private-images-li">
+                  <a data-toggle="tab" href="#tab-image-privates">
+                    <i class="icon-lock bigger-110"></i>
+                    Private images
+                  </a>
+                </li>
+            </ul>
+          </div>
+          <div class="wizard-actions row-fluid fix-bottom" style="display:none;">
+            <div class="fix-bottom-content">
+              <button class="btn-previous btn btn-sm btn-prev no-border" disabled="disabled">
+                <i class="icon-arrow-left"></i>
+                <span>Previous</span>
+              </button>
+              <button class="btn-next btn btn-primary btn-sm btn-next no-border">
+                <span>Next</span>
+                <i class="icon-arrow-right icon-on-right"></i>
+              </button>
+              <button id="btn-finish-app" class="btn btn-success btn-sm btn-finish no-border disabled" style="display:none">
+                <i class="icon-rocket"></i>
+                Launch cluster
+              </button>
+              <button id="btn-finish-container" class="btn btn-success btn-sm  btn-finish btn-finish no-border disabled">
+                <i class="icon-rocket"></i>
+                Launch container
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div id="step-container" class="row-fluid position-relative step-content under-fix-bottom">
+              <div id="spinner-overlay" class="widget-box-overlay" style="display:none;">
+                <i class="icon-refresh icon-spin icon-2x white"></i>
+              </div>
+              <div id="modal-step1" class="step-pane active">
+                <div class="tabbable">
+  <div class="tab-content" style="border:0px;">
+    
+    <div id="tab-image-base" class="tab-pane images-detail">
+      <div id="image-base-wrapper" class="images-detail"></div>
+    </div>
+    <div id="tab-image-doop" class="tab-pane images-detail active"><div id="jumpstart-images-providers" class="row"><ul class="nav nav-pills"><li class=""><a href="#jumpstart-database-servers" data-toggle="tab"> Database Servers</a></li><li class=""><a href="#jumpstart-cache-servers" data-toggle="tab"> Cache Servers</a></li><li class=""><a href="#jumpstart-ssh-servers" data-toggle="tab"> SSH servers</a></li><li class=""><a href="#jumpstart-messaging-queues" data-toggle="tab"> Messaging Queues</a></li><li class=""><a href="#jumpstart-analytics" data-toggle="tab"> Analytics</a></li><li class=""><a href="#jumpstart-application-servers" data-toggle="tab"> Application Servers</a></li><li class=""><a href="#jumpstart-cms" data-toggle="tab"> CMS</a></li><li class="active"><a href="#jumpstart-proxies" data-toggle="tab" class="active"> Proxies</a></li></ul><div class="tab-content"><div class="tab-pane" id="jumpstart-database-servers"><div class="text-center blue loading"><i class="icon-refresh icon-spin"></i> Loading</div></div><div class="tab-pane" id="jumpstart-cache-servers"><div class="text-center blue loading"><i class="icon-refresh icon-spin"></i> Loading</div></div><div class="tab-pane" id="jumpstart-ssh-servers"><div class="text-center blue loading"><i class="icon-refresh icon-spin"></i> Loading</div></div><div class="tab-pane" id="jumpstart-messaging-queues"><div class="text-center blue loading"><i class="icon-refresh icon-spin"></i> Loading</div></div><div class="tab-pane" id="jumpstart-analytics"><div class="text-center blue loading"><i class="icon-refresh icon-spin"></i> Loading</div></div><div class="tab-pane" id="jumpstart-application-servers"><div class="text-center blue loading"><i class="icon-refresh icon-spin"></i> Loading</div></div><div class="tab-pane" id="jumpstart-cms"><div class="text-center blue loading"><i class="icon-refresh icon-spin"></i> Loading</div></div><div class="tab-pane active" id="jumpstart-proxies" style=""><div class="row image_row" data-resource-uri="/api/v1/image/doolp/haproxy-http/">         <div class="col-xs-2 center">             <div class="space-8"></div>             <img src="/_static/assets/images/dockerimages/haproxy-64.png" style="width:64px;"><div class="space-6"></div>                      </div>         <div class="col-xs-6">             <h4>                 doolp/haproxy-http            </h4>             <p class="description">DEPRECATED: use doolp/haproxy instead. HAProxy image that load balances between any linked container that listens in port 80. It also auto-reconfigures itself if deployed in Doolp.</p>            <p></p>        </div>         <div class="col-xs-4">             <div class="space-8"></div>             <button class="btn btn-primary btn-block btn-sm no-border" data-image-name="doolp/haproxy-http" data-image-public-url="" data-image-icon="/_static/assets/images/dockerimages/haproxy-64.png" data-image-uri="/api/v1/image/doolp/haproxy-http/" onclick="selectImage(this)">                 Select <i class="icon-arrow-right icon-on-right"></i>             </button> </div>     </div></div></div></div></div>
+    <div id="tab-image-community" class="tab-pane">
+      <ul class="nav nav-pills images-pills">
+        <li id="doolp-images-li" class="active">
+          <a data-toggle="tab" href="#tab-docker">
+            <i class="icon-search bigger-110"></i>
+            Search Docker Hub
+          </a>
+        </li>
+        <li id="doolp-images-li">
+          <a data-toggle="tab" href="#tab-other-registries">
+            <i class="icon-search bigger-110"></i>
+            Other registries
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content" style="border:0px;">
+        <div id="tab-docker" class="tab-pane images-detail active">
+          <span class="input-icon" style="width: 100%;"><span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input id="search" class="form-control search-query ui-autocomplete-input" type="text" placeholder="Search by image name" autocomplete="off">            <i class="icon-search"></i></span>
+          <div id="community-search-result-wrapper" class="images-detail-wrapper"><div id="community-search-result" class="images-detail dialogs"><div class="empty-search" style="height: 300px;">
+                <h4 class="center"><i class="icon-search"></i>
+                  Please enter a search term above</h4>
+                <p class="center">Not sure where to start? Try searching for <code>doolp hello world</code></p>
+              </div></div></div>
+        </div>
+        <div id="tab-other-registries" class="tab-pane images-detail">
+          <span class="input-icon" style="width: 100%;"><span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input id="public-search" class="form-control search-query ui-autocomplete-input" type="text" placeholder="registry/namespace/image" autocomplete="off">            <i class="icon-search"></i></span>
+          <div id="public-search-result-wrapper" class="images-detail-wrapper"><div id="public-search-result" class="images-detail dialogs"><div class="empty-search" style="height: 300px;">
+                <h4 class="center"><i class="icon-search"></i>
+                  Please enter the full image name above</h4>
+                <p class="center">Include the registry host. For example, <code>quay.io/borja/redis</code></p>
+              </div></div></div>
+        </div>
+      </div>
+    </div>
+    <div id="tab-image-privates" class="tab-pane">
+      <div id="image-privates-wrapper" class="images-detail"></div>
+      <div class="doolp-registry-message alert alert-info" style="display:none;">
+        <button class="doolp-registry-message-close close">
+          <i class="icon-remove"></i>
+        </button>
+        <b>
+          <i class="icon-info-sign"></i>
+          Upload your images to Doolp
+        </b>
+        <br>
+        <a href="http://docs.doolp.com/features/registry/" target="_blank">
+          Click here
+          <i class="icon-external-link"></i>
+        </a>
+        for instructions on how to push your private images to Doolp
+      </div>
+    </div>
+  </div>
+</div>
+
+              </div>
+              <div id="modal-step2" class="step-pane">
+                <form id="form-step2" class="form-horizontal validate-form" role="form">
+  <input id="image-selected-id" type="hidden" value="">  <div class="row">
+    <div class="col-sm-8">
+      <div class="form-group">
+        <div class="row">
+          <label class="col-sm-3 control-label no-padding-right" for="image-tag">Image</label>
+          <div class="col-sm-9">
+            <label id="image-name" class="control-label"></label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <label class="col-sm-3 control-label no-padding-right" for="app-name">Container Name</label>
+          <div class="col-sm-9">
+            <input id="app-name" class="col-xs-10 validate-for-next validate[required,custom[container_name]]" type="text" placeholder="Name">          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <label class="col-sm-3 control-label no-padding-right" for="image-tag">Image Tag</label>
+          <div class="col-sm-9">
+            <select id="image-tag" class="form-control chosen tag-input-style"></select>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <label class="col-sm-3 control-label no-padding-right" for="app-name">Deployment type</label>
+          <div class="col-sm-3 no-padding-left">
+            <div class="radio">
+              <label>
+                <input class="container-radio ace" checked="checked" type="radio" value="container" name="app-type">
+                <span class="lbl">Single Container</span>
+              </label>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="radio">
+              <label>
+                <input class="cluster-radio ace" type="radio" value="cluster" name="app-type">
+                <span class="lbl">Container Cluster</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="amount-of-containers" class="form-group">
+        <div class="row">
+          <label class="col-sm-3 control-label no-padding-right" for="target-num-containers">Number of containers</label>
+          <div class="col-sm-9">
+            <div class="col-sm-9" style="height:31px;margin-top:10px;margin-left:-10px;">
+              <div id="target-num-containers-slider" class="help-block ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
+                <div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min"></div>
+                <a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 0%;"></a>
+              <div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min" style="width: 0%;"></div></div>
+              <input id="target_num_containers" type="hidden" name="target_num_containers" value="1">
+            </div>
+            <div class="col-sm-3">
+              <h5 class="blue">
+                <b id="target-num-containers-label">
+                  1
+                </b>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <label class="col-sm-3 control-label no-padding-right" for="container-size-group">Container size</label>
+          <div class="col-sm-9">
+            <div class="col-xs-10 no-padding center">
+              <div id="container-size-group" class="btn-group" data-toggle="buttons" style="width:100%;">
+                <label class="btn btn-info active">
+                  <input id="XS" checked="checked" type="radio" name="container_size">XS
+                </label>
+                <label class="btn btn-info">
+                  <input id="S" type="radio" name="container_size">S
+                </label>
+                <label class="btn btn-info">
+                  <input id="M" type="radio" name="container_size">M
+                </label>
+                <label class="btn btn-info">
+                  <input id="L" type="radio" name="container_size">L
+                </label>
+                <label class="btn btn-info">
+                  <input id="XL" type="radio" name="container_size">XL
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <label class="col-sm-3 control-label no-padding-right" for="run-command">
+            <span data-rel="tooltip" data-original-title="Command to be executed to start the application container(s)">
+              Run command
+            </span>
+          </label>
+          <div class="col-sm-9">
+            <input id="run-command" class="col-xs-10 validate[groupRequired[start]]" type="text" placeholder="Run command">
+          </div>
+        </div>
+      </div>
+      <div id="advanced-options" class="row" style="display:none;">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <div class="row">
+              <label class="col-sm-3 col-md-3 control-label no-padding-right" for="crash-recovery">
+                <span data-rel="tooltip" data-original-title="If a container of the application fails, it will be automatically restarted or replaced">
+                  Crash recovery
+                </span>
+              </label>
+              <div class="col-sm-2 col-md-1" style="margin-top:7px;">
+                <label>
+                  <input class="ace ace-switch ace-switch-3" type="checkbox" name="crash-recovery">
+                  <span class="lbl"></span>
+                </label>
+              </div>
+              <label class="col-sm-3 col-md-2 control-label no-padding-right" for="autodestroy">
+                <span data-rel="tooltip" data-original-title="If a container of the application stops, it will be automatically terminated">
+                  Autodestroy
+                </span>
+              </label>
+              <div class="col-sm-4 col-md-1" style="margin-top:7px;">
+                <label>
+                  <input class="ace ace-switch ace-switch-3" type="checkbox" name="autodestroy">
+                  <span class="lbl"></span>
+                </label>
+              </div>
+              <label class="for-sequential-deployment col-sm-3 col-md-2 control-label no-padding-right" style="margin-top:7px; display: none" for="sequential deployment">
+                <span data-rel="tooltip" data-original-title="Deploy and scale containers in sequential order">
+                  Sequential deployment
+                </span>
+              </label>
+              <div class="for-sequential-deployment col-sm-4 col-md-1" style="margin-top:7px; display: none">
+                <label>
+                  <input class="ace ace-switch ace-switch-3" type="checkbox" name="sequential-deployment">
+                  <span class="lbl"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-sm-3 control-label no-padding-right" for="entrypoint">
+                <span data-rel="link-tooltip" data-original-title="&lt;a href=&quot;http://docs.docker.io/reference/builder/#entrypoint&quot; target=&quot;_blank&quot;&gt;More details&nbsp;&lt;i class=&quot;icon-external-link bigger-110&quot;&gt;&lt;/i&gt;&lt;/a&gt;">
+                  Entrypoint
+                </span>
+              </label>
+              <div class="col-sm-9">
+                <input id="entrypoint" class="col-xs-10 validate[groupRequired[start]]" type="text">
+              </div>
+            </div>
+          </div>
+          <div id="ports-group" class="form-group">
+            <div class="row">
+              <label class="col-sm-3 control-label no-padding-right">
+                <span data-rel="tooltip" data-original-title="List of ports to be exposed publicly on the container(s)">
+                  Ports
+                </span>
+              </label>
+              <div class="col-sm-9">
+                <div id="image-ports-wrapper">
+                  <input id="image-ports" class="input-tag" type="text" name="tags" value="">                </div>
+                <span id="port-error-message" style="display:none;">
+                  <br>
+                  Please enter port information in the format:
+                  <code>
+                    &lt;port&gt;/(tcp|udp)
+                  </code>
+                  <br>
+                  For example, for HTTP:
+                  <code>
+                    80/tcp
+                  </code>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div id="web-public-dns-group" class="form-group">
+            <div class="row">
+              <label class="col-sm-3 control-label no-padding-right">
+                <span data-rel="tooltip" data-original-title="Custom domain is only enabled for containers that listen in port 80/tcp">
+                  Custom domain
+                </span>
+              </label>
+              <div class="col-sm-9">
+                <div id="image-ports-wrapper">
+                  <input id="web-public-dns" class="col-xs-10 validate[custom[fqdn]]" type="text" placeholder="myapp.example.com">                </div>
+                <span id="port-error-message" style="display:none;">
+                  Please enter port information in the format
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 center">
+          <span id="show-more" class="btn-primary btn-sm" href="#">
+            <i class="icon-double-angle-down"></i>
+            Advanced options
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div id="container-size-info-XS" class="pricing-box" style="display:block;padding-left:0px;" data-price="4">
+  <div class="widget-box">
+    <div class="widget-header header-color-blue">
+      <h5 class="bigger lighter">
+        <b>
+          XS
+        </b>
+      </h5>
+    </div>
+    <div class="widget-body">
+      <div class="widget-main">
+        <ul class="list-unstyled spaced2 bigger-110">
+          <li>
+            <i class="icon-tasks"></i>
+            <b>
+              256 MB
+            </b>
+            Memory
+          </li>
+          <li>
+            <i class="icon-dashboard"></i>
+            <b>
+              0.25
+            </b>
+            CPU
+            <span data-rel="tooltip" data-original-title="EC2 Compute Unit">ECUs</span>
+            (minimum)
+          </li>
+          <li>
+            <i class="icon-cloud-upload"></i>
+            <b>
+              Unlimited
+            </b>
+            incoming transfer
+          </li>
+          <li>
+            <i class="icon-cloud-download"></i>
+            <b>
+              2 GB
+            </b>
+            outgoing transfer *
+          </li>
+        </ul>
+        <hr>
+        <div class="price">
+          <b>
+            $4
+          </b>
+          <small>/month **</small>
+        </div>
+        <div class="price total-price" style="display:none;">
+          <b>
+            $4
+          </b>
+          <small>/month total **</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="container-size-info-S" class="pricing-box" style="display:none;padding-left:0px;" data-price="8">
+  <div class="widget-box">
+    <div class="widget-header header-color-blue">
+      <h5 class="bigger lighter">
+        <b>
+          S
+        </b>
+      </h5>
+    </div>
+    <div class="widget-body">
+      <div class="widget-main">
+        <ul class="list-unstyled spaced2 bigger-110">
+          <li>
+            <i class="icon-tasks"></i>
+            <b>
+              512 MB
+            </b>
+            Memory
+          </li>
+          <li>
+            <i class="icon-dashboard"></i>
+            <b>
+              0.50
+            </b>
+            CPU
+            <span data-rel="tooltip" data-original-title="EC2 Compute Unit">ECUs</span>
+            (minimum)
+          </li>
+          <li>
+            <i class="icon-cloud-upload"></i>
+            <b>
+              Unlimited
+            </b>
+            incoming transfer
+          </li>
+          <li>
+            <i class="icon-cloud-download"></i>
+            <b>
+              4 GB
+            </b>
+            outgoing transfer *
+          </li>
+        </ul>
+        <hr>
+        <div class="price">
+          <b>
+            $8
+          </b>
+          <small>/month **</small>
+        </div>
+        <div class="price total-price" style="display:none;">
+          <b>
+            $8
+          </b>
+          <small>/month total **</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="container-size-info-M" class="pricing-box" style="display:none;padding-left:0px;" data-price="16">
+  <div class="widget-box">
+    <div class="widget-header header-color-blue">
+      <h5 class="bigger lighter">
+        <b>
+          M
+        </b>
+      </h5>
+    </div>
+    <div class="widget-body">
+      <div class="widget-main">
+        <ul class="list-unstyled spaced2 bigger-110">
+          <li>
+            <i class="icon-tasks"></i>
+            <b>
+              1 GB
+            </b>
+            Memory
+          </li>
+          <li>
+            <i class="icon-dashboard"></i>
+            <b>
+              1
+            </b>
+            CPU
+            <span data-rel="tooltip" data-original-title="EC2 Compute Unit">ECU</span>
+            (minimum)
+          </li>
+          <li>
+            <i class="icon-cloud-upload"></i>
+            <b>
+              Unlimited
+            </b>
+            incoming transfer
+          </li>
+          <li>
+            <i class="icon-cloud-download"></i>
+            <b>
+              8 GB
+            </b>
+            outgoing transfer *
+          </li>
+        </ul>
+        <hr>
+        <div class="price">
+          <b>
+            $16
+          </b>
+          <small>/month **</small>
+        </div>
+        <div class="price total-price" style="display:none;">
+          <b>
+            $16
+          </b>
+          <small>/month total **</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="container-size-info-L" class="pricing-box" style="display:none;padding-left:0px;" data-price="32">
+  <div class="widget-box">
+    <div class="widget-header header-color-blue">
+      <h5 class="bigger lighter">
+        <b>
+          L
+        </b>
+      </h5>
+    </div>
+    <div class="widget-body">
+      <div class="widget-main">
+        <ul class="list-unstyled spaced2 bigger-110">
+          <li>
+            <i class="icon-tasks"></i>
+            <b>
+              2 GB
+            </b>
+            Memory
+          </li>
+          <li>
+            <i class="icon-dashboard"></i>
+            <b>
+              2
+            </b>
+            CPU
+            <span data-rel="tooltip" data-original-title="EC2 Compute Unit">ECUs</span>
+            (minimum)
+          </li>
+          <li>
+            <i class="icon-cloud-upload"></i>
+            <b>
+              Unlimited
+            </b>
+            incoming transfer
+          </li>
+          <li>
+            <i class="icon-cloud-download"></i>
+            <b>
+              16 GB
+            </b>
+            outgoing transfer *
+          </li>
+        </ul>
+        <hr>
+        <div class="price">
+          <b>
+            $32
+          </b>
+          <small>/month **</small>
+        </div>
+        <div class="price total-price" style="display:none;">
+          <b>
+            $32
+          </b>
+          <small>/month total **</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="container-size-info-XL" class="pricing-box" style="display:none;padding-left:0px;" data-price="64">
+  <div class="widget-box">
+    <div class="widget-header header-color-blue">
+      <h5 class="bigger lighter">
+        <b>
+          XL
+        </b>
+      </h5>
+    </div>
+    <div class="widget-body">
+      <div class="widget-main">
+        <ul class="list-unstyled spaced2 bigger-110">
+          <li>
+            <i class="icon-tasks"></i>
+            <b>
+              4 GB
+            </b>
+            Memory
+          </li>
+          <li>
+            <i class="icon-dashboard"></i>
+            <b>
+              4
+            </b>
+            CPU
+            <span data-rel="tooltip" data-original-title="EC2 Compute Unit">ECUs</span>
+            (minimum)
+          </li>
+          <li>
+            <i class="icon-cloud-upload"></i>
+            <b>
+              Unlimited
+            </b>
+            incoming transfer
+          </li>
+          <li>
+            <i class="icon-cloud-download"></i>
+            <b>
+              32 GB
+            </b>
+            outgoing transfer *
+          </li>
+        </ul>
+        <hr>
+        <div class="price">
+          <b>
+            $64
+          </b>
+          <small>/month **</small>
+        </div>
+        <div class="price total-price" style="display:none;">
+          <b>
+            $64
+          </b>
+          <small>/month total **</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="center">
+  <span class="smaller">
+    * 12¢ per additional GB
+    <br>
+  </span>
+  ** Charged per minute
+</div>
+
+    </div>
+  </div>
+</form>
+
+              </div>
+              <div id="modal-step3" class="step-pane">
+                <div class="row">
+  <div class="col-sm-12 form-horizontal">
+    <div class="form-group">
+      <div class="row">
+        <label class="col-sm-3 control-label no-padding-right" for="api-roles">
+          <span data-rel="link-tooltip" data-original-title="&lt;a href=&quot;http://docs.doolp.com/features/links/#using-doolp-api-roles&quot; target=&quot;_blank&quot;&gt;More details&nbsp;&lt;i class=&quot;icon-external-link bigger-110&quot;&gt;&lt;/i&gt;&lt;/a&gt;">
+            API roles
+          </span>
+        </label>
+        <div class="col-sm-8">
+          <select id="api-roles" class="form-control chosen tag-input-style" multiple="multiple"><option value="global">Full access</option></select>
+        </div>
+      </div>
+    </div>
+    <div id="link-cluster-group" class="form-group">
+      <div class="row">
+        <label class="col-sm-3 control-label no-padding-right" for="link-cluster">
+          <span data-rel="link-tooltip" data-original-title="&lt;a href=&quot;http://docs.doolp.com/features/links/&quot; target=&quot;_blank&quot;&gt;More details&nbsp;&lt;i class=&quot;icon-external-link bigger-110&quot;&gt;&lt;/i&gt;&lt;/a&gt;">
+            Link containers
+          </span>
+        </label>
+        <div class="col-sm-6">
+          <select id="link-cluster" class="form-control chosen tag-input-style col-sm-11" data-placeholder="Select a container or cluster">
+            <option></option>
+          </select>
+        </div>
+        <div class="col-sm-2">
+          <button id="add-application-link" class="btn btn-primary full-width disabled" type="button">
+            <i class="icon-plus"></i>
+            <span>Add</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <form id="envvar-form" class="validate-form">
+          <label class="col-sm-3 control-label no-padding-right">
+            Add environment variable
+          </label>
+          <div class="col-sm-3">
+            <input id="envvar-name" class="full-width validate[required,custom[envvar_name]]" type="text" placeholder="Name">
+          </div>
+          <div class="col-sm-3">
+            <input id="envvar-value" class="full-width validate[required]" type="text" placeholder="Value">
+          </div>
+          <div class="col-sm-2">
+            <button id="add-envvar" class="btn btn-primary col-sm-2 full-width disabled" type="button">
+              <i class="icon-plus"></i>
+              Add
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th style="width:35%;">Link</th>
+            <th style="width:20%;">Type</th>
+            <th style="width:35%;">Name</th>
+            <th style="width:10%;">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="aplication-links-tbody">
+          <tr id="envvars-empty-placeholder">
+            <td colspan="4">
+              <i class="icon-info-sign"></i>
+              No containers links defined
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th style="width:45%;">Name</th>
+            <th style="width:45%;">Value</th>
+            <th style="width:10%;">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="envvars-tbody">
+          <tr id="envvars-empty-placeholder">
+            <td colspan="3">
+              <i class="icon-info-sign"></i>
+              No environment variables defined
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="app-creation-modal" class="modal fade">
+    <div class="modal-dialog">
+      <div>
+        <p>
+          <i class="icon-refresh icon-spin"></i>
+          please wait
+
+        </p>
+      </div>
+    </div>
+  </div>
+
+        </div>
+      </div>
+{{end}}

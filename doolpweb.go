@@ -71,6 +71,7 @@ func main() {
     beego.Router("/", &routers.HomeRouter{})
     beego.Router("/login", &routers.LoginRouter{})
     beego.Router("/dashboard", &routers.DashboardRouter{})
+    beego.Router("/launch", &routers.LaunchRouter{})
     //beego.Router("/dashboard/list", &routers.DashboardRouter{})
     //beego.Router("/community", &routers.CommunityRouter{})
     //beego.Router("/quickstart", &routers.QuickStartRouter{})
