@@ -70,7 +70,8 @@ func main() {
     // Register routers.
     beego.Router("/", &routers.HomeRouter{})
     beego.Router("/login", &routers.LoginRouter{})
-    beego.Router("/console", &routers.ConsoleRouter{})
+    beego.Router("/dashboard", &routers.DashboardRouter{})
+    //beego.Router("/dashboard/list", &routers.DashboardRouter{})
     //beego.Router("/community", &routers.CommunityRouter{})
     //beego.Router("/quickstart", &routers.QuickStartRouter{})
     //beego.Router("/video", &routers.VideoRouter{})

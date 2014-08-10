@@ -1,0 +1,129 @@
+{{template "base/console_base.html" .}}
+{{define "head"}}{{end}}
+{{define "meta"}}
+    <meta name="description" content="Doolp - Simple hosting for your Docker containers" />
+    <meta name="keywords" content="Docker, Cloud, Doolp">
+    <title>{{i18n .Lang "console"}} - doolp: {{i18n .Lang "console_intr"}}</title>
+{{end}}
+{{define "body"}} 
+<div class="container">
+  <div class="page-content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="well markdown">
+          <div class="row">
+            <div class="col-sm-6 col-xs-6">
+              <h4 style="margin: -10px -100px 0px 0px;">
+                <i class="icon-dashboard"></i>
+                Dashboard
+              </h4>
+            </div>
+              <div class="col-sm-6 col-xs-6 align-right">
+                <a class="btn btn-success no-border" style="margin-top: 6px;" href="/launch/">
+                <i class="icon-rocket"></i>
+                Launch new container
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-xs-12">
+              <div id="select-all-row" class="row" style="">
+                <div class="col-xs-12">
+                  <div id="containers-actions" class="btn-group pull-right">
+                    <button class="btn btn-primary dropdown-toggle disabled" data-toggle="dropdown">
+                      Actions
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <button id="start-selected-btn" class="btn btn-success btn-sm no-border disabled">
+                          <i class="icon-play bigger-120"></i>
+                          Start Selected
+                        </button>
+                      </li>
+                      <li>
+                        <button id="stop-selected-btn" class="btn btn-danger btn-sm no-border disabled">
+                          <i class="icon-stop bigger-120"></i>
+                          Stop Selected
+                        </button>
+                      </li>
+                      <li>
+                        <button id="terminate-selected-btn" class="btn btn-destroy btn-sm no-border disabled">
+                          <i class="icon-trash bigger-120"></i>
+                          Terminate Selected
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div id="containers-table" class="table-responsive"><table class="backgrid"><thead><tr><th class="select-all-header-cell renderable"><input tabindex="-1" type="checkbox"></th><th class="sortable renderable type"><a>Type<b class="sort-caret"></b></a></th><th class="sortable renderable current_num_containers"><a>Name<b class="sort-caret"></b></a></th><th class="sortable renderable state"><a>Status<b class="sort-caret"></b></a></th><th class="sortable renderable image_name ascending"><a>Image<b class="sort-caret"></b></a></th><th class="sortable renderable container_size"><a>Size<b class="sort-caret"></b></a></th><th class="sortable renderable deployed_datetime_in_unix"><a>Deployed<b class="sort-caret"></b></a></th><th class="renderable">Action</th></tr></thead><tbody><tr style=""><td class="select-row-cell renderable" style="width: 5%;"><input tabindex="-1" type="checkbox"></td><td class="type sortable renderable" style="text-align: center; width: 5%;"><i class="icomoon-cube" title="" data-original-title="Container"></i></td><td class="cluster-link sortable renderable"><a href="/container/show/e1c20d61-637b-43bf-9676-36f4ca95c22b/">haproxy-http</a></td><td class="status sortable renderable" style="width: 15%;"><span class="green"><i class="icon-play"></i> <b>Running</b></span></td><td class="image-name sortable renderable" style="width: 25%;"><p class="image-tag ellipsis no-margin"><img src="/_static/assets/images/dockerimages/haproxy-64.png" style="width:18px;"> haproxy-http:latest</p></td><td class="image-size sortable renderable" style="width: 5%;"><span class="badge badge-grey">XS</span></td><td class="deployed sortable renderable" style="width: 15%;"><i class="icon-time"></i> <span class="time-refresher" data-time="Sat, 9 Aug 2014 12:36:17 +0000">3 hours ago</span></td><td class="container-actions editable sortable renderable" style="width: 10%;"><div id="action-buttons-e1c20d61-637b-43bf-9676-36f4ca95c22b" style="visibility: visible;">
+    <span id="start-btn" class="disabled" style="display: none;">
+      <a class="btn btn-minier btn-actions btn-success no-border" href="#" data-uuid="e1c20d61-637b-43bf-9676-36f4ca95c22b">
+        <i class="icon-play bigger-120"></i>
+        <span class="hidden-md hidden-sm hidden-xs inline">Start</span>
+      </a>
+    </span>
+    <span id="stop-btn" class="disabled" style="display: inline;">
+      <a class="btn btn-minier btn-actions btn-danger no-border" href="#" data-uuid="e1c20d61-637b-43bf-9676-36f4ca95c22b">
+        <i class="icon-stop bigger-120"></i>
+        <span class="hidden-md hidden-sm hidden-xs inline">Stop</span>
+      </a>
+    </span>
+    <span id="destroy-btn" class="disabled" style="display: inline;">
+      <a class="btn btn-minier btn-actions btn-destroy no-border" href="#" data-uuid="e1c20d61-637b-43bf-9676-36f4ca95c22b">
+        <i class="icon-trash bigger-120"></i>
+        <span class="hidden-md hidden-sm hidden-xs inline">Terminate</span>
+
+      </a>
+    </span>
+  </div></td></tr></tbody></table></div>
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-offset-3 col-xs-6 center">
+            <div class="space-20"></div>
+            <div id="beta-message" class="alert alert-warning" style="display:none;">
+              <button id="beta-message-close" class="close">
+                <i class="icon-remove"></i>
+              </button>
+              <i class="icon-warning-sign"></i>
+              <b>
+                Tutum is in BETA
+              </b>
+              <br>
+              Please don't use Tutum for your production containers (yet)!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="action-buttons" style="visibility:hidden;">
+    <span id="start-btn" class="disabled" style="display:none;">
+      <a class="btn btn-minier btn-actions btn-success no-border" href="#">
+        <i class="icon-play bigger-120"></i>
+        <span class="hidden-md hidden-sm hidden-xs inline">Start</span>
+      </a>
+    </span>
+    <span id="stop-btn" class="disabled" style="display:none;">
+      <a class="btn btn-minier btn-actions btn-danger no-border" href="#">
+        <i class="icon-stop bigger-120"></i>
+        <span class="hidden-md hidden-sm hidden-xs inline">Stop</span>
+      </a>
+    </span>
+    <span id="destroy-btn" class="disabled" style="display:none;">
+      <a class="btn btn-minier btn-actions btn-destroy no-border" href="#">
+        <i class="icon-trash bigger-120"></i>
+        <span class="hidden-md hidden-sm hidden-xs inline">Terminate</span>
+
+      </a>
+    </span>
+  </div>
+
+        </div>
+      </div>
+{{end}}
